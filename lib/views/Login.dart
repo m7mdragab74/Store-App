@@ -28,13 +28,10 @@ class _LoginState extends State<Login> {
       }));
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Invalid pass or email")));
+          .showSnackBar(const SnackBar(content: Text("Invalid email or pass")));
+      emailcontroller.clear();
+      passwordcontroller.clear();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -42,7 +39,11 @@ class _LoginState extends State<Login> {
     return Scaffold(
         backgroundColor: Color(0xFF1a2531),
         appBar: AppBar(
-          title: const Text("Login page"),
+          backgroundColor: Color(0xFF1a2531),
+          title: const Text(
+            "Login page",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: Center(
           child: Column(children: [
@@ -50,11 +51,13 @@ class _LoginState extends State<Login> {
               flex: 2,
             ),
             Textfield(
+              onEdit: login,
               controller: emailcontroller,
               title: "Email",
               obscureText: false,
             ),
             Textfield(
+              onEdit: login,
               controller: passwordcontroller,
               title: "passowrd",
               obscureText: obscuretext,
@@ -68,11 +71,11 @@ class _LoginState extends State<Login> {
                   icon: obscuretext
                       ? const Icon(
                           Icons.visibility_off,
-                          size: 24,
+                          //size: 24,
                         )
                       : const Icon(
                           Icons.visibility,
-                          size: 24,
+                          //size: 24,
                         )),
             ),
             const SizedBox(
@@ -101,8 +104,11 @@ class _LoginState extends State<Login> {
               child: Row(
                 children: [
                   const Text(
-                    "Don't hane an account yet?",
+                    "Don't have an account yet?",
                     style: TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(
+                    width: 0,
                   ),
                   TextButton(
                       onPressed: () {},
@@ -113,10 +119,10 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            ElevatedButton(
-              onPressed: login,
-              child: Text("Login"),
-            ),
+            // ElevatedButton(
+            //   onPressed: login,
+            //   child: Text("Login"),
+            // ),
           ]),
         ));
   }
