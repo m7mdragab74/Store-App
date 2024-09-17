@@ -14,10 +14,10 @@ class Userservice {
   }
 
   static Future<Usermodel?> checkemailandpass(
-      String email, String password) async {
+      String username, String password) async {
     List<Usermodel> user = await getusers();
     for (var item in user) {
-      if (item.email == email && item.password == password) {
+      if (item.username == username && item.password == password) {
         return item;
       }
     }

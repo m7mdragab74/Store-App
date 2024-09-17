@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:store_app/model/usermodel.dart';
 import 'package:store_app/services/userservice.dart';
 import 'package:store_app/views/home_page.dart';
-import 'package:store_app/widget/Textfield.dart';
+import 'package:store_app/views/signup_page.dart';
+import 'package:store_app/widget/signIn&signUp/Textfield.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,12 +15,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool obscuretext = true;
   bool remeberme = false;
-  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   Future login() async {
-    String Email = emailcontroller.text;
+    String username = usernamecontroller.text;
     String pass = passwordcontroller.text;
-    Usermodel? user = await Userservice.checkemailandpass(Email, pass);
+    Usermodel? user = await Userservice.checkemailandpass(username, pass);
     if (user != null) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Succussful")));
@@ -27,9 +28,9 @@ class _LoginState extends State<Login> {
         return HomePage();
       }));
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Invalid email or pass")));
-      emailcontroller.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Invalid username or pass")));
+      usernamecontroller.clear();
       passwordcontroller.clear();
     }
   }
@@ -42,18 +43,18 @@ class _LoginState extends State<Login> {
           backgroundColor: Color(0xFF1a2531),
           title: const Text(
             "Login page",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.grey),
           ),
         ),
         body: Center(
           child: Column(children: [
             const Spacer(
-              flex: 2,
+              flex: 3,
             ),
             Textfield(
               onEdit: login,
-              controller: emailcontroller,
-              title: "Email",
+              controller: usernamecontroller,
+              title: "username",
               obscureText: false,
             ),
             Textfield(
@@ -71,11 +72,9 @@ class _LoginState extends State<Login> {
                   icon: obscuretext
                       ? const Icon(
                           Icons.visibility_off,
-                          //size: 24,
                         )
                       : const Icon(
                           Icons.visibility,
-                          //size: 24,
                         )),
             ),
             const SizedBox(
@@ -98,6 +97,20 @@ class _LoginState extends State<Login> {
                 )
               ],
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              color: Color(0xFF2f3d4e).withOpacity(.5),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              onPressed: login,
+              child: const Text(
+                "Login",
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(80),
@@ -107,11 +120,13 @@ class _LoginState extends State<Login> {
                     "Don't have an account yet?",
                     style: TextStyle(color: Colors.grey),
                   ),
-                  const SizedBox(
-                    width: 0,
-                  ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignupPage();
+                        }));
+                      },
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(color: Colors.white),
@@ -119,10 +134,6 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            // ElevatedButton(
-            //   onPressed: login,
-            //   child: Text("Login"),
-            // ),
           ]),
         ));
   }
