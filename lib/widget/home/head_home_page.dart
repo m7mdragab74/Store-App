@@ -8,7 +8,7 @@ class HeadHomePage extends StatelessWidget {
     return const Row(
       children: [
         Text(
-          'Discover profucts',
+          'Discover products',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
