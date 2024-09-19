@@ -111,7 +111,7 @@ class DetailsCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           )
         ],

@@ -18,6 +18,49 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Color(0xff1a2531),
+      bottomNavigationBar: CustomBottomNavBar(
+        pages: const [
+          HomePage(),
+          FavPage(),
+          ProfilePage(),
+        ],
+        color: HomePage.primaryColor,
+        selectedIndex: _selectedIndex,
+        onItemSelected: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(13),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 16,
+            ),
+            HeadHomePage(),
+            SizedBox(
+              height: 16,
+            ),
+            Expanded(
+              child: GridView.builder(
+                itemCount: 4,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 0.70),
+                itemBuilder: (context, index) {
+                  return ProductCard();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
