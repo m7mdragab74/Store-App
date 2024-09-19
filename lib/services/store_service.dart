@@ -6,11 +6,11 @@ class ProductServices {
   Dio dio;
   ProductServices(this.dio);
 
-  Future<List<ProductModel>> getProducts() async {
+  Future<List<Product>> getProducts() async {
     try {
       Response response = await dio.get('https://fakestoreapi.com/products');
-      List<ProductModel> products = (response.data as List)
-          .map((product) => ProductModel.fromJson(product))
+      List<Product> products = (response.data as List)
+          .map((product) => Product.fromJson(product))
           .toList();
       return products;
     } on DioException catch (e) {

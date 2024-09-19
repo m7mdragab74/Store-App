@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:store_app/model/store_model.dart';
 import 'package:store_app/services/store_service.dart';
-import 'package:store_app/views/fav_page.dart';
-import 'package:store_app/views/profile_page.dart';
 import 'package:store_app/widget/home/head_home_page.dart';
-import 'package:store_app/widget/home/nav_botton.dart';
 import 'package:store_app/widget/home/product_card.dart';
 import 'package:dio/dio.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.username});
+  final String username;
   static const primaryColor = Colors.blue;
 
   @override
@@ -17,10 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  List<ProductModel> products = [];
+  List<Product> products = [];
   bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchProducts() async {
     try {
       ProductServices productServices = ProductServices(Dio());
-      List<ProductModel> fetchedProducts = await productServices.getProducts();
+      List<Product> fetchedProducts = await productServices.getProducts();
       setState(() {
         products = fetchedProducts;
         isLoading = false;
@@ -47,20 +43,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff1a2531),
-      bottomNavigationBar: CustomBottomNavBar(
-        pages: const [
-          HomePage(),
-          FavPage(),
-          ProfilePage(),
-        ],
-        color: HomePage.primaryColor,
-        selectedIndex: _selectedIndex,
-        onItemSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
       body: Padding(
         padding: const EdgeInsets.all(13),
         child: Column(
@@ -84,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisSpacing: 10,
                               childAspectRatio: 0.48),
                       itemBuilder: (context, index) {
-                        return ProductCard(productModel: products[index]);
+                        return ProductCard(productModel: products[index],username: widget.username,);
                       },
                     ),
             ),

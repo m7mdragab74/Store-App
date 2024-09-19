@@ -1,99 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:store_app/views/fav_page.dart';
+import 'package:store_app/views/home_page.dart';
+import 'package:store_app/views/profile_page.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onItemSelected;
-  final Color color;
-  final List<Widget> pages;
+class CustomButtomNavBar extends StatefulWidget {
+  const CustomButtomNavBar({super.key, required this.username});
+  final String username;
 
-  const CustomBottomNavBar({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemSelected,
-    required this.color,
-    required this.pages,
-  });
+  @override
+  State<CustomButtomNavBar> createState() => _CustomButtomNavBarState();
+}
+
+class _CustomButtomNavBarState extends State<CustomButtomNavBar> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xff1a2531),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, -1),
-          ),
-        ],
+    final List<Widget> screens = [
+      HomePage(
+        username: widget.username,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildBottomNavItem(
-            context,
-            0,
-            Icons.home_rounded,
-            'Home',
-          ),
-          const Spacer(flex: 1),
-          _buildBottomNavItem(
-            context,
-            1,
-            Icons.favorite_border,
-            'Favorite',
-          ),
-          const Spacer(flex: 1),
-          _buildBottomNavItem(
-            context,
-            2,
-            Icons.person_2_outlined,
-            'Profile',
-          ),
-        ],
+      FavPage(
+        username: widget.username,
       ),
-    );
-  }
-
-  Widget _buildBottomNavItem(
-      BuildContext context, int index, IconData icon, String label) {
-    return InkWell(
-      onTap: () {
-        onItemSelected(index);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => pages[index]),
-        );
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: selectedIndex == index
-                ? const Color(0xffEBC7A7)
-                : const Color(0xff7B8085),
-            size: 24,
+      ProfilePage(
+        username: widget.username,
+      ),
+    ];
+    return SafeArea(
+      child: Scaffold(
+        body: screens[_selectedIndex],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A1D20), // Dark color for background
+            boxShadow: [
+              BoxShadow(blurRadius: 20, color: Colors.grey.withOpacity(.1)),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: selectedIndex == index
-                  ? const Color(0xffEBC7A7)
-                  : const Color(0xff7B8085),
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              child: GNav(
+                gap: 8, // Space between icon and text
+                activeColor: const Color(0xFFDFB88F), // Active icon and text color (light tan)
+                color: const Color(0xFF9E9E9E), // Inactive icon color (light grey)
+                iconSize: 24,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                duration: const Duration(milliseconds: 500),
+                tabBackgroundColor: Colors.transparent, // No background color for active tab
+                tabs: const [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.favorite_border,
+                    text: 'Favorite',
+                  ),
+                  GButton(
+                    icon: Icons.person_outline,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

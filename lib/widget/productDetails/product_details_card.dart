@@ -3,7 +3,7 @@ import 'package:store_app/model/store_model.dart';
 
 class DetailsCard extends StatelessWidget {
   const DetailsCard({super.key, required this.productModel});
-  final ProductModel productModel;
+  final Product productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +52,14 @@ class DetailsCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '${productModel.rate}',
+                '${productModel.rating.rate}',
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(width: 8),
               const Icon(Icons.comment, color: Colors.white70, size: 18),
               const SizedBox(width: 4),
               Text(
-                '${productModel.count} reviews',
+                '${productModel.rating.count} reviews',
                 style: TextStyle(color: Colors.white70),
               ),
             ],

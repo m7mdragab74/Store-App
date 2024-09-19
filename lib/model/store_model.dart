@@ -1,38 +1,37 @@
-class ProductModel {
-  int id;
+class Product {
   String title;
   double price;
   String description;
   String category;
   String image;
-  double rate;
-  int count;
+  Rating rating;
 
-  ProductModel({
-    required this.id,
-    required this.category,
-    required this.count,
-    required this.description,
-    required this.image,
-    required this.price,
-    required this.rate,
-    required this.title,
-  });
+  Product(
+      {required this.title,
+      required this.price,
+      required this.description,
+      required this.category,
+      required this.image,
+      required this.rating});
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      id: json['id'],
-      category: json['category'],
-      count: json['rating']['count'],
-      description: json['description'],
-      image: json['image'],
-      price: (json['price'] is int)
-          ? (json['price'] as int).toDouble()
-          : json['price'],
-      rate: (json['rating']['rate'] is int)
-          ? (json['rating']['rate'] as int).toDouble()
-          : json['rating']['rate'],
-      title: json['title'],
-    );
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+        title: json['title'],
+        price: json['price'].toDouble(),
+        description: json['description'],
+        category: json['category'],
+        image: json['image'],
+        rating: Rating.fromJson(json['rating']));
+  }
+}
+
+class Rating {
+  final double rate;
+  final int count;
+
+  Rating({required this.rate, required this.count});
+
+  factory Rating.fromJson(Map<String, dynamic> json) {
+    return Rating(rate: json['rate'].toDouble(), count: json['count']);
   }
 }

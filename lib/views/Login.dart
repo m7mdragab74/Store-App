@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/database/store_database.dart';
 import 'package:store_app/model/usermodel.dart';
 import 'package:store_app/services/userservice.dart';
-import 'package:store_app/views/home_page.dart';
 import 'package:store_app/views/signup_page.dart';
+import 'package:store_app/widget/home/nav_botton.dart';
 import 'package:store_app/widget/signIn&signUp/Textfield.dart';
 
 class Login extends StatefulWidget {
@@ -22,10 +23,16 @@ class _LoginState extends State<Login> {
     String pass = passwordcontroller.text;
     Usermodel? user = await Userservice.checkemailandpass(username, pass);
     if (user != null) {
+      // Save login information
+      final dbHelper = DatabaseHelper();
+      await dbHelper.insertUser(
+        usernamecontroller.text,
+        passwordcontroller.text,
+      );
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Succussful")));
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return HomePage();
+        return CustomButtomNavBar(username: username,);
       }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
