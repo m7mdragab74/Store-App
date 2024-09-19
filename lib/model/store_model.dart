@@ -26,8 +26,12 @@ class ProductModel {
       count: json['rating']['count'],
       description: json['description'],
       image: json['image'],
-      price: json['price'],
-      rate: json['rating']['rate'],
+      price: (json['price'] is int)
+          ? (json['price'] as int).toDouble()
+          : json['price'],
+      rate: (json['rating']['rate'] is int)
+          ? (json['rating']['rate'] as int).toDouble()
+          : json['rating']['rate'],
       title: json['title'],
     );
   }

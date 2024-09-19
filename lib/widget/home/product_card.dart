@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/model/store_model.dart';
 import 'package:store_app/views/details_page.dart';
 
 class ProductCard extends StatelessWidget {
-  ProductCard({super.key});
+  ProductCard({super.key, required this.productModel});
   bool isFavorite = false;
-
+  final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,7 +31,7 @@ class ProductCard extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: Image.network(
-                      'https://scontent.fcai19-12.fna.fbcdn.net/v/t39.30808-6/434055414_964541538594777_3039437514723769392_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=VI6FDdrj4GkQ7kNvgFP4gJc&_nc_ht=scontent.fcai19-12.fna&_nc_gid=ABvzC2aasCrkEICYb0JG93j&oh=00_AYCwW3owu5e5zgT7OY39OijFp9tDpOXGfmKMHz3ZRkEZAw&oe=66EF9C66',
+                      productModel.image,
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: 120,
@@ -58,15 +59,15 @@ class ProductCard extends StatelessWidget {
                 )
               ],
             ),
-            const Text(
-              'lamb',
+            Text(
+              productModel.title,
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             const SizedBox(
               height: 3,
             ),
-            const Text(
-              '\$1500',
+            Text(
+              '\$${productModel.price}',
               style: TextStyle(
                 color: Color(0xffEBC7A7),
               ),
@@ -74,8 +75,8 @@ class ProductCard extends StatelessWidget {
             const SizedBox(
               height: 3,
             ),
-            const Text(
-              'Category',
+            Text(
+              productModel.category,
               style: TextStyle(color: Color(0xff7B8085)),
             )
           ],
