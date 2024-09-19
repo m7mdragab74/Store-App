@@ -21,7 +21,7 @@ class DetailsPage extends StatelessWidget {
                   productModel.image,
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: 867.4,
                 ),
                 Positioned(
                   top: 32,
@@ -63,9 +63,14 @@ class DetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 543,
+                  left: 0,
+                  right: 0,
+                  child: DetailsCard(productModel: productModel),
+                )
               ],
             ),
-            DetailsCard(productModel: productModel),
           ],
         ),
       ),
