@@ -70,7 +70,6 @@ class _CartScreenState extends State<CartScreen> {
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
-              const SizedBox(height: 16),
               Expanded(
                 child: ListView.separated(
                   itemCount: cartProvider.cartProducts.length,
@@ -247,7 +246,10 @@ class _CartCardState extends State<CartCard> {
               top: 0,
               child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () {}),
+                  onPressed: () {
+                    cartProvider.removeFromCart(
+                        widget.username, widget.productModel['title']);
+                  }),
             ),
           ],
         ),

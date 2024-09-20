@@ -47,9 +47,6 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(13),
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
             HeadHomePage(
               username: widget.username,
             ),
@@ -66,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisCount: 2,
                               mainAxisSpacing: 10,
                               crossAxisSpacing: 10,
-                              childAspectRatio: 0.48),
+                              childAspectRatio: 0.55),
                       itemBuilder: (context, index) {
                         return ProductCard(
                           productModel: products[index],
