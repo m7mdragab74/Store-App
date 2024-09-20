@@ -50,7 +50,9 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 16,
             ),
-            const HeadHomePage(),
+            HeadHomePage(
+              username: widget.username,
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -66,7 +68,10 @@ class _HomePageState extends State<HomePage> {
                               crossAxisSpacing: 10,
                               childAspectRatio: 0.48),
                       itemBuilder: (context, index) {
-                        return ProductCard(productModel: products[index],username: widget.username,);
+                        return ProductCard(
+                          productModel: products[index],
+                          username: widget.username,
+                        );
                       },
                     ),
             ),
