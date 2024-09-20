@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/model/store_model.dart';
 
 class DetailsCard extends StatelessWidget {
-  const DetailsCard({super.key});
+  const DetailsCard({super.key, required this.productModel});
+  final Product productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,8 @@ class DetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          const Text(
-            'Porcelain Lamp',
+          Text(
+            productModel.title,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -49,22 +51,22 @@ class DetailsCard extends StatelessWidget {
                 size: 18,
               ),
               const SizedBox(width: 8),
-              const Text(
-                '4.8',
+              Text(
+                '${productModel.rating.rate}',
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(width: 8),
               const Icon(Icons.comment, color: Colors.white70, size: 18),
               const SizedBox(width: 4),
-              const Text(
-                '9 reviews',
+              Text(
+                '${productModel.rating.count} reviews',
                 style: TextStyle(color: Colors.white70),
               ),
             ],
           ),
           const SizedBox(height: 17),
-          const Text(
-            'This stylish porcelain lamp will give you a soft warm light which can make your interior look exclusive and cozy.',
+          Text(
+            productModel.description,
             style: TextStyle(color: Colors.white70),
           ),
           const SizedBox(height: 8),
@@ -75,10 +77,10 @@ class DetailsCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              const Column(
+              Column(
                 children: [
                   Text(
-                    '\$100.30',
+                    '\$${productModel.price + 10}',
                     style: TextStyle(
                       color: Colors.white70,
                       decoration: TextDecoration.lineThrough,
@@ -86,7 +88,7 @@ class DetailsCard extends StatelessWidget {
                   ),
                   SizedBox(height: 1),
                   Text(
-                    '\$99.99',
+                    '\$${productModel.price}',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -111,7 +113,7 @@ class DetailsCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           )
         ],
