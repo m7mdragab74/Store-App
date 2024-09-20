@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:store_app/statemanagement/user_provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key, required this.username});
@@ -8,7 +10,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               const SizedBox(height: 10),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
@@ -55,17 +56,17 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 10),
               Column(
                 children: [
-                  const Text(
-                    'Nagham',
-                    style: TextStyle(
+                  Text(
+                    Provider.of<UserProvider>(context).username!,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  const Text(
-                    'Nagham@gmail.com',
-                    style: TextStyle(
+                  Text(
+                    Provider.of<UserProvider>(context).userdata!.email,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
                     ),

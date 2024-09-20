@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/services/userservice.dart';
+import 'package:store_app/views/Login.dart';
 import 'package:store_app/widget/signIn&signUp/Textfield.dart';
 
 class SignupPage extends StatefulWidget {
@@ -9,28 +11,104 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  bool obscuretext = true;
   bool obscurepass = true;
-  TextEditingController passcontroller = TextEditingController();
-  TextEditingController confrimpasscontroller = TextEditingController();
+  TextEditingController firstnamecontroller = TextEditingController();
+  TextEditingController lastnamecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  Future<void> signup() async {
+    if (formKey.currentState!.validate()) {
+      final user = {
+        "email": emailcontroller,
+        "username": usernamecontroller,
+        "password": passwordcontroller,
+        "name": {
+          "firstname": firstnamecontroller,
+          "lastname": lastnamecontroller
+        },
+      };
+      try {
+        await Userservice.Signup(user);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Successful sign up!")));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Login();
+        }));
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Failed to Signup!")));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFF1a2531),
-        appBar: AppBar(
-          backgroundColor: Color(0xFF1a2531),
-          title: const Text(
-            "Sign Up",
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
         body: Column(
           children: [
-            Textfield(title: "firstname", obscureText: false),
-            Textfield(title: "Lastname", obscureText: false),
-            Textfield(title: "Email", obscureText: false),
+            const SizedBox(
+              height: 160,
+            ),
+            const Text(
+              "Sign Up",
+              style: TextStyle(color: Colors.grey, fontSize: 35),
+            ),
             Textfield(
-                controller: passcontroller,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a firstname';
+                }
+                return null;
+              },
+              title: "firstname",
+              obscureText: false,
+              controller: firstnamecontroller,
+            ),
+            Textfield(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a lastname';
+                }
+                return null;
+              },
+              title: "Lastname",
+              obscureText: false,
+              controller: lastnamecontroller,
+            ),
+            Textfield(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a email';
+                }
+                return null;
+              },
+              title: "Email",
+              obscureText: false,
+              controller: emailcontroller,
+            ),
+            Textfield(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a username';
+                }
+                return null;
+              },
+              title: "username",
+              obscureText: false,
+              controller: usernamecontroller,
+            ),
+            Textfield(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
+                  }
+                  return null;
+                },
+                controller: passwordcontroller,
                 title: "passoword",
                 obscureText: obscurepass,
                 obscuringchar: "*",
@@ -47,33 +125,20 @@ class _SignupPageState extends State<SignupPage> {
                         : const Icon(
                             Icons.visibility,
                           ))),
-            Textfield(
-              controller: confrimpasscontroller,
-              validator: (value) {
-                if (value == passcontroller.text) {
-                  return "passowrds match";
-                } else {
-                  return "passowrds don't match";
-                }
-              },
-              title: " confirm passoword",
-              obscureText: obscuretext,
-              obscuringchar: "*",
-              suffix: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      obscuretext = !obscuretext;
-                    });
-                  },
-                  icon: obscuretext
-                      ? const Icon(
-                          Icons.visibility_off,
-                        )
-                      : const Icon(
-                          Icons.visibility,
-                        )),
+            const SizedBox(
+              height: 50,
             ),
-            Textfield(title: "Email", obscureText: false),
+            MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              color: Color(0xFF2f3d4e).withOpacity(.5),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              onPressed: signup,
+              child: const Text(
+                "Sign Up",
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           ],
         ));
   }

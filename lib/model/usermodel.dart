@@ -4,7 +4,7 @@ class Usermodel {
   final String password;
   final String firstname;
   final String lastname;
-  final String username;
+  late final String username;
 
   Usermodel(
       {required this.id,
