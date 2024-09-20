@@ -41,12 +41,19 @@ class _LoginState extends State<Login> {
         return CustomButtomNavBar(
           username: username,
         );
+
       }));
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return CustomButtomNavBar(
           username: username,
         );
+
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return CustomButtomNavBar(username: username,);
+
+
       }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
