@@ -99,7 +99,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   top: 543,
                   left: 0,
                   right: 0,
-                  child: DetailsCard(productModel: widget.productModel),
+                  child: DetailsCard(productModel: widget.productModel,username: widget.username,),
                 )
               ],
             ),
