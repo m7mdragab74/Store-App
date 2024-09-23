@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:store_app/statemanagement/cart_provider.dart';
 import 'package:store_app/statemanagement/favorite_provider.dart';
 import 'package:store_app/views/Login.dart';
+import 'package:store_app/views/fav_page.dart';
 
 
 void main() {
@@ -19,7 +20,7 @@ class StoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: FavPage(username: '',),
     );
   }
 }
