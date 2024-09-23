@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store_app/model/store_model.dart';
 import 'package:store_app/statemanagement/cart_provider.dart';
+import 'package:store_app/views/details_page.dart';
 
 class CartScreen extends StatefulWidget {
   final String username;
@@ -149,109 +151,131 @@ class CartCard extends StatefulWidget {
 class _CartCardState extends State<CartCard> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(
-      builder: (context, cartProvider, child) => Card(
-        color: const Color(0xff1a2531),
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image.network(
-                      widget.productModel['image'],
-                      width: 90,
-                      height: 90,
-                      fit: BoxFit.cover,
+    Rating rating = Rating(
+        rate: widget.productModel['rating_rate'],
+        count: widget.productModel['rating_count']);
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailsPage(
+                productModel: Product(
+                    title: widget.productModel['title'],
+                    price: widget.productModel['price'],
+                    description: widget.productModel['description'],
+                    category: widget.productModel['category'],
+                    image: widget.productModel['image'],
+                    rating: rating),
+                username: widget.username)));
+      },
+      child: Consumer<CartProvider>(
+        builder: (context, cartProvider, child) => Card(
+          color: const Color(0xff1a2531),
+          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Image.network(
+                        widget.productModel['image'],
+                        width: 90,
+                        height: 90,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.productModel['title'],
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.white)),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Container(
-                              width: 35,
-                              height: 37,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff2f3d4e),
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(15.0),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              widget.productModel['title'],
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white)),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Container(
+                                width: 35,
+                                height: 37,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff2f3d4e),
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    if (widget.productModel['quantity'] > 1) {
+                                      cartProvider.updateCartProductQuantity(
+                                        widget.username,
+                                        widget.productModel['title'],
+                                        -1,
+                                      );
+                                    }
+                                  },
+                                  icon: const Icon(Icons.remove,
+                                      size: 18, color: Colors.white),
+                                ),
                               ),
-                              child: IconButton(
-                                onPressed: () {
-                                  if (widget.productModel['quantity'] > 1) {
+                              const SizedBox(width: 6),
+                              Text(
+                                '${widget.productModel['quantity']}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 25,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(width: 6),
+                              Container(
+                                width: 35,
+                                height: 37,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff2f3d4e),
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
                                     cartProvider.updateCartProductQuantity(
                                       widget.username,
                                       widget.productModel['title'],
-                                      -1,
+                                      1,
                                     );
-                                  }
-                                },
-                                icon: const Icon(Icons.remove,
-                                    size: 18, color: Colors.white),
+                                  },
+                                  icon: const Icon(Icons.add,
+                                      size: 18, color: Colors.white),
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '${widget.productModel['quantity']}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 25,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(width: 6),
-                            Container(
-                              width: 35,
-                              height: 37,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff2f3d4e),
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  cartProvider.updateCartProductQuantity(
-                                    widget.username,
-                                    widget.productModel['title'],
-                                    1,
-                                  );
-                                },
-                                icon: const Icon(Icons.add,
-                                    size: 18, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Spacer(),
+                              Text('\$${widget.productModel['price']}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.yellow.shade200)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text('\$${widget.productModel['price']}',
-                      style: TextStyle(
-                          fontSize: 18, color: Colors.yellow.shade200)),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () {
-                    cartProvider.removeFromCart(
-                        widget.username, widget.productModel['title']);
-                  }),
-            ),
-          ],
+              Positioned(
+                right: 0,
+                top: 0,
+                child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      cartProvider.removeFromCart(
+                          widget.username, widget.productModel['title']);
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -3,10 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:store_app/model/store_model.dart';
 
 class ProductServices {
-  Dio dio;
-  ProductServices(this.dio);
+  static final Dio dio=Dio();
 
-  Future<List<Product>> getProducts() async {
+
+   static Future<List<Product>> getProducts() async {
     try {
       Response response = await dio.get('https://fakestoreapi.com/products');
       List<Product> products = (response.data as List)

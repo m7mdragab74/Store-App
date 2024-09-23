@@ -23,4 +23,19 @@ class Userservice {
     }
     return null;
   }
+
+  static Future<void> Signup(Map<String, dynamic> user) async {
+    try {
+      Response response = await dio.post('$baseurl/signup',
+          data: user,
+          options: Options(headers: {'Content type': 'application/json'}));
+      if (response.statusCode == 200) {
+        print('User signed up successfully');
+      } else {
+        print("Failed to sign up");
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 }

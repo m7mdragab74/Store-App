@@ -82,14 +82,6 @@ class _HeadHomePageState extends State<HeadHomePage> {
             ],
           ),
         ),
-        const SizedBox(
-          width: 19,
-        ),
-        const Icon(
-          Icons.search_outlined,
-          size: 31,
-          color: Colors.white,
-        ),
       ],
     );
   }

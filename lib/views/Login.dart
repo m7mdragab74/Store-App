@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:store_app/database/store_database.dart';
 import 'package:store_app/model/usermodel.dart';
 import 'package:store_app/services/userservice.dart';
+import 'package:store_app/statemanagement/user_provider.dart';
 import 'package:store_app/views/signup_page.dart';
 import 'package:store_app/widget/home/nav_botton.dart';
 import 'package:store_app/widget/signIn&signUp/Textfield.dart';
@@ -29,10 +31,16 @@ class _LoginState extends State<Login> {
         usernamecontroller.text,
         passwordcontroller.text,
       );
+      Provider.of<UserProvider>(context, listen: false).username = username;
+      Provider.of<UserProvider>(context, listen: false).userdata = user;
+
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Succussful")));
+
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return CustomButtomNavBar(username: username,);
+        return CustomButtomNavBar(
+          username: username,
+        );
       }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
