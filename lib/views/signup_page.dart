@@ -22,13 +22,23 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> signup() async {
     if (formKey.currentState!.validate()) {
       final user = {
-        "email": emailcontroller.text,
-        "username": usernamecontroller.text,
-        "password": passwordcontroller.text,
-        "name": {
-          "firstname": firstnamecontroller.text,
-          "lastname": lastnamecontroller.text
+        "address": {
+          "geolocation": {"lat": "-37.3159", "long": "81.1496"},
+          "city": "kilcoole",
+          "street": "new road",
+          "number": 7682,
+          "zipcode": "12926-3874"
         },
+        "id": 1,
+        "email": emailcontroller,
+        "username": usernamecontroller,
+        "password": passwordcontroller,
+        "name": {
+          "firstname": firstnamecontroller,
+          "lastname": lastnamecontroller
+        },
+        "phone": "1-570-236-7033",
+        "__v": 0
       };
       try {
         await Userservice.Signup(user);

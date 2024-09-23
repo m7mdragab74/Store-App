@@ -41,19 +41,18 @@ class _LoginState extends State<Login> {
         return CustomButtomNavBar(
           username: username,
         );
-
       }));
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return CustomButtomNavBar(
           username: username,
         );
-
+      }));
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return CustomButtomNavBar(username: username,);
-
-
+        return CustomButtomNavBar(
+          username: username,
+        );
       }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +129,7 @@ class _LoginState extends State<Login> {
             ),
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-              color: Color(0xFF2f3d4e).withOpacity(.5),
+              color: const Color(0xFF2f3d4e).withOpacity(.5),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               onPressed: login,

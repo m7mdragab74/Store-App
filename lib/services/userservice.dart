@@ -10,6 +10,7 @@ class Userservice {
     final users = (response.data as List)
         .map((user) => Usermodel.fromjson(user))
         .toList();
+    print(response.data);
     return users;
   }
 
@@ -26,7 +27,7 @@ class Userservice {
 
   static Future<void> Signup(Map<String, dynamic> user) async {
     try {
-      Response response = await dio.post('$baseurl/signup',
+      Response response = await dio.post('$baseurl/${Endpoints.users}',
           data: user,
           options: Options(headers: {'Content type': 'application/json'}));
       if (response.statusCode == 200) {
