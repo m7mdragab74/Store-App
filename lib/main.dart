@@ -5,7 +5,6 @@ import 'package:store_app/statemanagement/favorite_provider.dart';
 import 'package:store_app/statemanagement/user_provider.dart';
 import 'package:store_app/views/Login.dart';
 
-
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserProvider()),
