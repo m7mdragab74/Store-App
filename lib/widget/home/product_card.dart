@@ -22,7 +22,8 @@ class _ProductCardState extends State<ProductCard> {
     // Initialize the provider
     _favoriteProvider = Provider.of<FavoriteProvider>(context, listen: false);
     // Check the initial favorite status when the card is created
-    _favoriteProvider.checkIfFavorite(widget.username, widget.productModel.title);
+    _favoriteProvider.checkIfFavorite(
+        widget.username, widget.productModel.title);
   }
 
   @override
@@ -31,8 +32,10 @@ class _ProductCardState extends State<ProductCard> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) =>
-                DetailsPage(productModel: widget.productModel,username: widget.username,),
+            builder: (context) => DetailsPage(
+              productModel: widget.productModel,
+              username: widget.username,
+            ),
           ),
         );
       },
@@ -43,6 +46,7 @@ class _ProductCardState extends State<ProductCard> {
         ),
         elevation: 5,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
@@ -88,9 +92,7 @@ class _ProductCardState extends State<ProductCard> {
                             });
                           },
                           icon: Icon(
-                            isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
                             color: isFavorite
                                 ? const Color(0xffea4e25)
                                 : const Color(0xff7B8085),
@@ -103,22 +105,36 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ],
             ),
-            Text(
-              widget.productModel.title,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            const SizedBox(height: 3),
-            Text(
-              '\$${widget.productModel.price}',
-              style: const TextStyle(
-                color: Color(0xffEBC7A7),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    widget.productModel.title,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    '\$${widget.productModel.price}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color(0xffEBC7A7),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    widget.productModel.category,
+                    style: const TextStyle(
+                      color: Color(0xff7B8085),
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 3),
-            Text(
-              widget.productModel.category,
-              style: const TextStyle(color: Color(0xff7B8085)),
-            ),
+            )
           ],
         ),
       ),
