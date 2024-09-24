@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_app/statemanagement/user_provider.dart';
+import 'package:store_app/views/Login.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key, required this.username});
-  final String username;
+  const ProfilePage({super.key});
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
@@ -57,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 children: [
                   Text(
-                    Provider.of<UserProvider>(context).username!,
+                    Provider.of<UserProvider>(context).userdata!.username,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -87,14 +89,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _buildCardItem(Icons.shop, 'My Orders'),
-                      Container(
+                      const SizedBox(
                         height: 80,
-                        child: const VerticalDivider(color: Colors.white),
+                        child: VerticalDivider(color: Colors.white),
                       ),
                       _buildCardItem(Icons.filter_1_outlined, 'Promo Code'),
-                      Container(
+                      const SizedBox(
                         height: 80,
-                        child: const VerticalDivider(color: Colors.white),
+                        child: VerticalDivider(color: Colors.white),
                       ),
                       _buildCardItem(Icons.person_rounded, 'Following'),
                     ],
@@ -102,10 +104,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 children: [
-                  const SizedBox(width: 30),
-                  const Text(
+                  SizedBox(width: 30),
+                  Text(
                     'General Settings',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -138,13 +140,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Row(
+              const Row(
                 children: [
-                  const SizedBox(width: 30),
-                  const Text(
+                  SizedBox(width: 30),
+                  Text(
                     'Other',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -170,7 +172,42 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icons.flag_rounded, 'Contact perferences'),
                       _buildOtherCard(
                           Icons.content_paste, 'Terms and Conditions'),
-                      _buildOtherCard(Icons.error_outline, 'Log out'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.error_outline,
+                                    size: 25, color: Colors.white),
+                              ),
+                              const Text(
+                                'Log out',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.yellow),
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.remove('isLoggedIn');
+
+                              // Navigate back to the LoginPage
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => const Login()),
+                                  (route) => false);
+                            },
+                            icon: const Icon(Icons.keyboard_arrow_right,
+                                size: 25, color: Colors.white),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

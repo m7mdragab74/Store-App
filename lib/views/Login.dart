@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_app/database/store_database.dart';
 import 'package:store_app/model/usermodel.dart';
 import 'package:store_app/services/userservice.dart';
@@ -20,6 +23,7 @@ class _LoginState extends State<Login> {
   bool remeberme = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+
   Future login() async {
     String username = usernamecontroller.text;
     String pass = passwordcontroller.text;
@@ -33,9 +37,21 @@ class _LoginState extends State<Login> {
       );
       Provider.of<UserProvider>(context, listen: false).username = username;
       Provider.of<UserProvider>(context, listen: false).userdata = user;
+      final userModel = Usermodel(
+        id: user.id,
+        email: user.email,
+        password: passwordcontroller.text,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: usernamecontroller.text,
+      );
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userData', jsonEncode(userModel.toJson()));
+      await prefs.setBool('isLoggedIn', true); // Save login status
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Succussful")));
+          .showSnackBar(const SnackBar(content: Text("Successful")));
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return CustomButtomNavBar(
@@ -44,7 +60,7 @@ class _LoginState extends State<Login> {
       }));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Invalid username or pass")));
+          const SnackBar(content: Text("Invalid username or password")));
       usernamecontroller.clear();
       passwordcontroller.clear();
     }
