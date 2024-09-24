@@ -4,7 +4,8 @@ import 'package:store_app/model/store_model.dart';
 import 'package:store_app/statemanagement/cart_provider.dart';
 
 class DetailsCard extends StatefulWidget {
-  const DetailsCard({super.key, required this.productModel, required this.username});
+  const DetailsCard(
+      {super.key, required this.productModel, required this.username});
   final Product productModel;
   final String username;
 
@@ -104,9 +105,14 @@ class _DetailsCardState extends State<DetailsCard> {
             ],
           ),
           const SizedBox(height: 17),
-          Text(
-            widget.productModel.description,
-            style: const TextStyle(color: Colors.white70),
+          SizedBox(
+            height: 100,
+            child: SingleChildScrollView(
+              child: Text(
+                widget.productModel.description,
+                style: const TextStyle(color: Colors.white70),
+              ),
+            ),
           ),
           const SizedBox(height: 8),
           const Divider(
@@ -152,9 +158,6 @@ class _DetailsCardState extends State<DetailsCard> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 40,
-          )
         ],
       ),
     );
