@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:store_app/statemanagement/cart_provider.dart';
 import 'package:store_app/statemanagement/favorite_provider.dart';
 import 'package:store_app/statemanagement/user_provider.dart';
-import 'package:store_app/views/Login.dart';
-import 'package:store_app/views/fav_page.dart';
+import 'package:store_app/views/splash_screen.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -21,7 +20,7 @@ class StoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FavPage(username: '',),
+      home: SplashScreen(),
     );
   }
 }
