@@ -24,9 +24,7 @@ class _CustomButtomNavBarState extends State<CustomButtomNavBar> {
       FavPage(
         username: widget.username,
       ),
-      ProfilePage(
-        username: widget.username,
-      ),
+      const ProfilePage(),
     ];
     return SafeArea(
       child: Scaffold(
@@ -43,12 +41,16 @@ class _CustomButtomNavBarState extends State<CustomButtomNavBar> {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
               child: GNav(
                 gap: 8, // Space between icon and text
-                activeColor: const Color(0xFFDFB88F), // Active icon and text color (light tan)
-                color: const Color(0xFF9E9E9E), // Inactive icon color (light grey)
+                activeColor: const Color(
+                    0xFFDFB88F), // Active icon and text color (light tan)
+                color:
+                    const Color(0xFF9E9E9E), // Inactive icon color (light grey)
                 iconSize: 24,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 duration: const Duration(milliseconds: 500),
-                tabBackgroundColor: Colors.transparent, // No background color for active tab
+                tabBackgroundColor:
+                    Colors.transparent, // No background color for active tab
                 tabs: const [
                   GButton(
                     icon: Icons.home,

@@ -22,4 +22,17 @@ class Usermodel {
         lastname: json['name']['lastname'],
         username: json['username']);
   }
+  
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'password': password,
+      'name': {
+        'firstname': firstname,
+        'lastname': lastname,
+      },
+      'username': username,
+    };
+  }
 }

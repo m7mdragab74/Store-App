@@ -4,7 +4,7 @@ import 'package:store_app/services/store_service.dart';
 import 'package:store_app/widget/home/category_nsv_bar.dart';
 import 'package:store_app/widget/home/head_home_page.dart';
 import 'package:store_app/widget/home/product_card.dart';
-import 'package:dio/dio.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.username});

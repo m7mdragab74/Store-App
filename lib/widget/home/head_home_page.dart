@@ -11,12 +11,12 @@ class HeadHomePage extends StatefulWidget {
 }
 
 class _HeadHomePageState extends State<HeadHomePage> {
-  late CartProvider _cartProvider;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _cartProvider = Provider.of<CartProvider>(context, listen: false);
+    // Load cart products as soon as the page loads
+    Provider.of<CartProvider>(context, listen: false)
+        .loadCartProducts(widget.username);
   }
 
   @override
@@ -58,8 +58,7 @@ class _HeadHomePageState extends State<HeadHomePage> {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: Colors
-                            .red, // Background color of the notification badge
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       constraints: const BoxConstraints(
