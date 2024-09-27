@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_app/statemanagement/user_provider.dart';
-import 'package:store_app/views/Login.dart';
+import 'package:store_app/views/Login_Page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

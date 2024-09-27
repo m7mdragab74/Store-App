@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_app/model/usermodel.dart';
 import 'package:store_app/statemanagement/user_provider.dart';
-import 'package:store_app/views/Login.dart';
+import 'package:store_app/views/Login_Page.dart';
 import 'package:store_app/widget/home/nav_botton.dart';
 
 class SplashScreen extends StatefulWidget {

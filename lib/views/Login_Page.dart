@@ -53,18 +53,6 @@ class _LoginState extends State<Login> {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Successful")));
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return CustomButtomNavBar(
-          username: username,
-        );
-      }));
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return CustomButtomNavBar(
-          username: username,
-        );
-      }));
-
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return CustomButtomNavBar(
           username: username,
